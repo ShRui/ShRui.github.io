@@ -1,0 +1,13 @@
+name: "Yay internet!"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Academic Experience"
+      href: Academic Experience.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<rshumin0220@ygmail.com>
+    - icon: fa-github fa-lg
+      href: http://github.com/ShRui/
+output:
+  html_document

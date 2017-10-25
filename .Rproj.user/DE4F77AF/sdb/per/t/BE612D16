@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Problem_2\"\nauthor: \"Shumin Rui\"\ndate: \"10/24/2017\"\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\nknitr::opts_chunk$set(\n  fig.width = 8,\n  fig.asp = 1,\n  out.width = \"120%\")\nlibrary(readxl)\nlibrary(tidyverse)\nlibrary(dplyr)\nlibrary(janitor)\nlibrary(lubridate)\n```\n\n```{r tidy the data}\n#import GDP data\ngdp_data = read_csv(\"./GDP.csv\") %>% \n  clean_names() %>% \n  filter(!(value == \".\")) %>% \n  mutate(date = as.Date(date))\n\n#import pols dataset\nmonth_data = read_csv(\"./pols-month.csv\") %>% \n  clean_names() %>% \n  na.omit() %>% \n  rename(date = mon) %>% \n  mutate(date = floor_date(ymd(date), \"month\")) %>% \n  mutate(president = recode(prez_gop, `0` = \"dem\", `1` = \"gop\", `2` = \"gop\")) %>%\n  select(-prez_gop, -prez_dem)\n\n#combine two datasets\ngdp_mon_data <- left_join(gdp_data, month_data, by = \"date\")\n```\n\n\n```{r plot_GDP}\ngdp_mon_data %>%\n  ggplot( aes(x = as.character(date), y = as.numeric(value), fill = president)) + # plot GDP change over time, color of bins depends on president variable\n  geom_bar(stat=\"identity\", width = 1) + # change binwidth to 1\n  labs(\n    title = \"GDP change over time\", #plot title\n    x = \"Date\", # x label\n    y = \"GDP\" # y label\n  ) +\n  theme(legend.position = \"bottom\", # put legend to the bottom\n        text = element_text(size = 12), # set test front size\n        axis.text.x = element_text(size = 4, angle = 90, hjust = 1) # set x asix test style\n        )\n```\n\nThe plot above shows the quarterly GDP change over time from `r gdp_mon_data[1, \"date\"]` to `r gdp_mon_data[nrow(gdp_mon_data), \"date\"]`. The dates when the president was democrat are labeled with red, and when the president was republican are labeled in blue. \n",
+    "created" : 1508964646209.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "297097196",
+    "id" : "BE612D16",
+    "lastKnownWriteTime" : 1508957930,
+    "last_content_update" : 1508957930,
+    "path" : "~/Desktop/2017Fall/P8105/p8105_hw/p8105_hw4_sr3461/p8105_hw4_sr3461.Rmd",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
