@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Academic Experience"
-      href: Academic Experience.html
+      href: Academic_Experience.html
     - icon: fa-envelope fa-lg
       href: mailto:<rshumin0220@ygmail.com>
     - icon: fa-github fa-lg
